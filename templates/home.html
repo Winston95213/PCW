@@ -1,0 +1,235 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <!--javascript extensions-->
+    <script src='../static/js/vue.min.js'></script>
+    <script src='../static/js/axios.min.js'></script>
+    <script src="../static/js/jquery-3.6.1.min.js"></script>
+
+    <!--Css-->
+    <link rel="stylesheet" href='../static/css/home.css'>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu&display=swap" rel="stylesheet">
+
+    <!--jQueryUi-->
+    <link rel="stylesheet" href="../static/jQueryUi-dotLuv/jquery-ui.min.css">
+    <link rel="stylesheet" href="../static/jQueryUi-dotLuv/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="../static/jQueryUi-dotLuv/jquery-ui.theme.min.css">
+    <script src="../static/jQueryUi-dotLuv/jquery-ui.js"></script>
+
+    <!--Bootstrap 5-->
+{#    <link rel="stylesheet" href="../static/bootstrap5/bootstrap.min.css">#}
+{#    <srcipt src="../static/bootstrap5/bootstrap.min.js"></srcipt>#}
+{#    <meta name="viewport" content="width=device-width, initial-scale=1">#}
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
+
+</head>
+
+<body>
+<!-- HTML !-->
+    <div id="home">
+        <div v-if="!login" style="padding: 20px; display: inline-block; float: right;">
+            <form action="{% url "login" %}" class="d-flex nav-item">
+                <button class="signin_button">Signin</button>
+            </form>
+        </div>
+
+        <div class="div_cart">
+            <a href="{% url "cart" %}">
+                <img src="static/images/shopping-cart.png"alt="shopping-cart" id="cart" v-show="login">
+            </a>
+        </div>
+
+
+        <div class="title" v-show="before_search">
+            <h1>MoHome</h1>
+        </div>
+        <div class="search">
+            <input  v-model="search_word" type="search" id="search_input" placeholder="Search here..." required>
+            <button type="submit" v-on:click="search">Search</button>
+            <br>
+            <h style="color: #f0f0f0">High to Low <input type="checkbox" value="Expensive" v-model="high_to_low"></h>
+        </div>
+
+        <div class="d-flex justify-content-center">
+            <div id="loading_sign" v-if="loading_sign" class="spinner-grow text-light" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+
+{#        <div style="font-size: 30px;color:white;" >{[search_word]}</div>#}
+
+{#        <table>#}
+{#            <thead>#}
+{#                <tr>#}
+{#                    <td></td>#}
+{#                </tr>#}
+{#            </thead>#}
+{#            <tbody>#}
+{#                <tr style="font-size: 14px;color:white;">#}
+{#                    <td v-show="!loading_sign" v-for="(items, index) in data_list">#}
+{#                        <a :href="items[2]" style="text-decoration: none;" v-on:click="add" v-bind:accessKey="index+1">#}
+{#                            <span class="index" style="color:orange;">{[index + 1]} :</span><br>#}
+{#                            <span class="product" style="text-decoration: none;">{[items[0]]}<br></span>#}
+{#                            <span class="price" style="text-decoration: none;">${[items[1]]}<br></span>#}
+{#                            <img class="product_image" :src="items[3]" alt="image error">#}
+{#                        </a>#}
+{#                    </td>#}
+{#                </tr>#}
+{#            </tbody>#}
+{#        </table>#}
+{#        <div v-if="show_button" class="product_list">#}
+{#            <button v-on:click="for_more" class="show_button">Show More</button>#}
+{#        </div>#}
+        <div class="product_list">
+            <ul v-if="show_more" style="list-style-type: none;">
+                <li v-for="(items, index) in precision_data">
+                    <a :href="items[2]" style="text-decoration: none;">
+    {#                       <span class="index" style="color:orange;">{[index + 1]} :</span><br>#}
+                        <span class="product" style="text-decoration: none;  padding-top: 20px;">{[items[0]]}<br></span>
+                        <span class="price" style="text-decoration: none;">${[items[1]]}<br></span>
+                        <img class="product_image" :src="items[3]" alt="image error">
+                    </a>
+                    <button class="btn btn-outline-light" v-on:click="add" style="margin:0 0 0 50px;" v-bind:accessKey="index">新增</button>
+                    <div style="height: 5px; background-color: #BF826B; margin: 20px;"></div>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <script>
+        var home = new Vue(
+            {
+                data: {
+                    login: false,
+                    cart_amount: 0,
+                    high_to_low: false,
+                    search_word: 'PS5',
+                    show_more: true,  // True for disable the show_more button
+                    show_button: false,
+                    loading_sign: false,
+                    before_search: true,
+                    data: [],
+                    data_list: [],
+                    precision_data: [],
+                    reversed_data: [],
+                    all_data: [],
+                    cart_index: [],
+                },
+                methods:{
+                  search: function(){
+                      this.cart_index= []
+                      this.loading_sign = true
+                      this.show_button = 1  // True for disable the show_more button
+                      this.show_more = 1  // True for disable the show_more button
+                      const url = 'search?keyword=' + this.search_word;
+                      axios.get(url)
+                          .then(res => {
+                              console.log(res.data)
+
+                              {#this.data_list= JSON.parse(res.data[0])#}
+                              this.precision_data = JSON.parse(res.data[1])
+                              this.all_data = JSON.parse(res.data[2])
+                              this.data_list= this.precision_data.slice(0, 5)
+                              this.loading_sign = 0;
+                              this.show_button = 1;
+                              if(this.high_to_low){
+                                  this.data_list = this.precision_data.reverse().slice(0, 5);
+                                  console.log(this.data_list);
+                                  console.log("reversed_data: ")
+                                  console.log(this.reversed_data);
+                                }
+
+                          })
+                          .catch(err => {
+                              console.warn("Error");
+                              console.log(err);
+                              this.loading_sign = 1;
+                              $(".loading_sign").removeClass("text-light");
+                              $(".loading_sign").addClass("text-danger");
+                          })
+
+                      this.before_search = false;
+                      {#$(".search").css("margin-top: 50px;");#}
+                      {#$("#home").addClass("home_changed");#}
+
+
+                  },
+                  for_more: function(){
+                      if(this.show_more === 1){
+                          this.show_more = 0
+                      }
+                      else{
+                          this.show_more = 1
+                      }
+
+                  },
+                  add: function(e){
+
+                      let index = e.target.accessKey;
+                      let product = this.precision_data[index][0];
+                      let price = this.precision_data[index][1];
+                      let link = this.precision_data[index][2];
+                      let image = this.precision_data[index][3];
+
+                      if(this.login === false){
+                          alert("Please login first")
+                          window.location.href = "{% url 'login' %}"
+                          return
+                      }
+
+                      if ((index in this.cart_index)){
+                          alert(product + " has been added")
+                      }
+                      else{
+                          let base_url = "send_to_cart?product=" +  product + "&price=" +  price
+                            + "&link=" + link +"&image=" + image;
+                          console.log("sent axios url: " + base_url);
+                          this.cart_index.push(index)
+
+                          axios.get(base_url)
+                            .then(res => {
+                              this.cart_amount += 1
+                              console.log(index)
+                              console.log(this.cart_amount)
+                          })
+                            .catch(error => {
+                                alert(error.message)
+                                console.log("error: " + error)
+                            })
+                      }
+
+                  },
+                  get_cookie(){
+                        let url = "send_cookie_to_loginPage"
+                        axios.get(url)
+                            .then(res => {
+                            this.login_verified = res.data;
+                            console.log(this.login_verified );
+                            if (this.login_verified  === "verified"){
+                                this.login = true;
+                            }
+                        }).catch(err => {
+                            console.log(err);
+                        })
+                  },
+                },
+                delimiters: ['{[',']}'],
+                created: function(){
+                    this.get_cookie();
+                }
+            }
+        );
+        home.$mount('#home')
+
+
+    </script>
+</body>
+</html>

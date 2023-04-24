@@ -1,0 +1,191 @@
+body {
+  background: url("../images/bg-color.png") no-repeat center center fixed;
+  background-size: cover;
+}
+
+.home_changed {
+  background: url("../images/bg-color.png") no-repeat center center fixed;
+  background-size: cover;
+}
+
+.loading-sign {
+  font-size: 2em;
+  color: orange;
+  font-weight: bold;
+  align-items: center;
+}
+
+.div_cart {
+  float: right;
+}
+.div_cart #cart {
+  height: 2.5em;
+  width: 2.5em;
+  display: flex;
+  float: right;
+  margin-top: 1em;
+  margin-right: 1em;
+}
+.div_cart #cart_amount {
+  float: right;
+  margin-right: 1.1em;
+}
+
+.title {
+  width: 300px;
+  height: 50px;
+  padding-top: 3em;
+  margin: auto;
+}
+.title h1 {
+  text-align: center;
+  font-size: 50px;
+  color: white;
+  font-family: "Ubuntu", sans-serif;
+}
+
+.search {
+  width: 500px;
+  height: 40px;
+  margin: 90px auto;
+  background: #444;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+  border: 1px solid #fff;
+}
+.search #search_input {
+  width: 370px;
+  padding: 10px 5px;
+  float: left;
+  color: #ccc;
+  border: 0;
+  background: transparent;
+  border-radius: 3px 0 0 3px;
+}
+.search #search_input:focus {
+  outline: 0;
+  background: transparent;
+}
+.search button {
+  position: relative;
+  float: right;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  height: 40px;
+  width: 120px;
+  color: #fff;
+  background: transparent;
+  border-left: 1px solid #fff;
+  border-radius: 0 3px 3px 0;
+}
+.search button:hover {
+  background: #fff;
+  color: #444;
+}
+.search button:active {
+  box-shadow: 0px 0px 12px 0px rgb(225, 225, 225);
+}
+.search button:focus {
+  outline: 0;
+}
+
+.product_list a {
+  text-decoration: none;
+  color: #BFA18F;
+}
+.product_list a:hover {
+  text-decoration: none;
+  color: #BFA18F;
+}
+.product_list .product_image {
+  height: 200px;
+  width: 200px;
+}
+.product_list .price {
+  font-family: bold;
+}
+
+table td {
+  padding-right: 20px;
+}
+table td .product {
+  min-height: 70px;
+  margin-bottom: auto;
+}
+table td img {
+  text-align: center;
+}
+
+.product_list {
+  display: inline;
+}
+.product_list li {
+  border-bottom: 1px solid #cecfd5;
+}
+
+/* Product List */
+.product_list li {
+  border-bottom: 0;
+}
+
+.signin_button {
+  padding: 0.6em 2em;
+  border: none;
+  outline: none;
+  color: rgb(255, 255, 255);
+  background: #111;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  border-radius: 10px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.signin_button:before {
+  content: "";
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  -webkit-filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing-signin_button 20s linear infinite;
+  transition: opacity 0.3s ease-in-out;
+  border-radius: 10px;
+}
+
+@keyframes glowing-signin_button {
+  0% {
+    background-position: 0 0;
+    border-radius: 10px;
+  }
+  50% {
+    background-position: 400% 0;
+    border-radius: 10px;
+  }
+  100% {
+    background-position: 0 0;
+    border-radius: 10px;
+  }
+}
+.signin_button:after {
+  z-index: -1;
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: #222;
+  left: 0;
+  top: 0;
+  border-radius: 10px;
+}
+
+
+/*# sourceMappingURL=home.css.map */

@@ -1,0 +1,22 @@
+body {
+  background: url("../images/bg-color.png") no-repeat center center fixed;
+  background-size: cover;
+}
+
+.title {
+  text-decoration: none;
+  color: white;
+}
+.title :hover {
+  text-decoration: none;
+}
+
+.cart_list {
+  list-style-type: none;
+}
+.cart_list img {
+  height: 200px;
+  width: 200px;
+}
+
+/*# sourceMappingURL=cart.css.map */

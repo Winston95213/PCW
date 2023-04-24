@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+</head>
+<body>
+    <div id="error">
+        <h1>Error</h1>
+        <h2>500 Server Internal Error</h2>
+        <p>Error: {{ error }}</p>
+    </div>
+    <script>
+        var error = new Vue({
+            el: '#register',
+            data: {},
+            methods:{},
+            delimiters: ['{[', ']}1']
+        }).$mount("#error")
+
+    </script>
+</body>
+</html>
