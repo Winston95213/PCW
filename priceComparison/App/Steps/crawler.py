@@ -34,7 +34,7 @@ class Crawler(Step):
         url = f'https://ecshweb.pchome.com.tw/search/v3.3/all/results?q={inputs["product"]}'
         print(url)
 
-        r = requests.get(url, headers=inputs["headers"])
+        r = requests.get(url, headers=inputs["headers"], verify=False)
         data = r.json()
         for product in data['prods']:
             # pprint.pprint(product)
@@ -91,7 +91,7 @@ class Parser(Crawler):
                   '}&_advThreeHours=N&_isFuzzy=0&_imgSH=fourCardType'.format(
                 page, inputs["product"])
             print(url)
-            r = requests.get(url, headers=inputs["headers"])
+            r = requests.get(url, headers=inputs["headers"], verify=False)
             if r.status_code == 200:
                 soup = BeautifulSoup(r.text, "html.parser")
             lis = soup.find_all(class_="goodsItemLiSeo")
