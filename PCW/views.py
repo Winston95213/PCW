@@ -20,11 +20,15 @@ def test():
     content = "Hello"
     return content
 
+def compare(request):
+    return render(request, "compare.html")
 
 async def search(request):
     if request.method == 'GET':
         search_word = request.GET
         search_word = search_word["keyword"]
+        cookies_response = cookies_product(request, search_word)
+        print(cookies_response)
         print(search_word)
         # data = test()
         # data = await sync_to_async(main.activate, thread_sensitive=True)(search_word=search_word)
@@ -38,9 +42,9 @@ async def search(request):
             ZipData = json.dumps(list(data["ZipData"]))
             PrecisionData = json.dumps(list(data["PrecisionData"]))
             AllData = json.dumps(list(data["AllData"]))
-            # pprint.pprint(json.loads(ZipData))
-            pprint.pprint(json.loads(PrecisionData))
-            pprint.pprint(json.loads(AllData))
+            pprint.pprint(json.loads(ZipData))
+            # pprint.pprint(json.loads(PrecisionData))
+            # pprint.pprint(json.loads(AllData))
         except Exception as e:
             print(e)
 
@@ -54,7 +58,6 @@ async def search(request):
 
 
 cart = []
-
 
 def cart_session(request):
     try:
@@ -178,3 +181,25 @@ def getCookies(request):
             return render(request, "error.html")
     except:
         return JsonResponse(data="No Cookie, Please Login Again", safe=False)
+
+
+def cookies_product(request, product):
+    response = HttpResponse(content_type='text/plain')
+    print(f"Send Cookies: {product}")
+    response.set_cookie(key=".product", value=product, httponly=True, expires=3600)
+    return response
+
+def get_cookies_product(request):
+    try:
+        if request.method == "GET":
+            product = request.COOKIES['.product']
+            print(f"product: {product}")
+            return JsonResponse(data=product, safe=False)
+        else:
+            return render(request, "error.html")
+    except:
+        return JsonResponse(data="No Cookie", safe=False)
+
+
+
+

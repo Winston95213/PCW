@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 from django.conf import settings
 
-from PCW.views import home, cart
+from PCW.views import home, cart, compare
 from PCW.views import search
 from PCW.views import cart_session
 from PCW.views import get_cart
@@ -29,12 +29,14 @@ from PCW.views import login
 from PCW.views import sendCookies
 from PCW.views import getCookies
 from PCW.views import send_cookie_to_loginPage
+from PCW.views import get_cookies_product
 
 
 urlpatterns = [
     path("", home, name="home"),
     path("register", register, name="register"),
     path("login", login, name="login"),
+    path("compare", compare, name="compare"),
     path("search", search),
     path("admin/", admin.site.urls),
     path("send_to_cart", cart_session),
@@ -44,6 +46,7 @@ urlpatterns = [
     path("sendCookies", sendCookies),
     path("getCookies", getCookies),
     path("send_cookie_to_loginPage", send_cookie_to_loginPage),
+    path("get_product", get_cookies_product),
 
 
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

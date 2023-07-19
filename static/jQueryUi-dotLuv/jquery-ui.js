@@ -8748,7 +8748,7 @@ $.extend( $.ui.autocomplete, {
 	}
 } );
 
-// Live region extension, adding a `messages` option
+// Live region extensions, adding a `messages` option
 // NOTE: This is an experimental API. We are still investigating
 // a full solution for string manipulation and internationalization.
 $.widget( "ui.autocomplete", $.ui.autocomplete, {
@@ -15015,7 +15015,7 @@ $.widget( "ui.spinner", {
 // TODO: switch return back to widget declaration at top of file when this is removed
 if ( $.uiBackCompat !== false ) {
 
-	// Backcompat for spinner html extension points
+	// Backcompat for spinner html extensions points
 	$.widget( "ui.spinner", $.ui.spinner, {
 		_enhance: function() {
 			this.uiSpinner = this.element

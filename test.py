@@ -1,22 +1,14 @@
-from random import random
+import requests
+from bs4 import BeautifulSoup
 
+headers = {"user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_7_4) AppleWebKit/537.13 (KHTML, like Gecko) Chrome/24.0.1290.1 Safari/537.13"}
+url = "https://www.rakuten.com.tw/search/" + "PS5"
+r = requests.get(url, headers = headers, verify=False)
+print(r)
+if r.status_code == 200:
+    soup = BeautifulSoup(r.text, 'html.parser')
 
-# A list of ten people name
-names = ["John", "Paul", "George", "Ringo", "Pete", "Stuart", "Mick", "Keith", "Ronnie", "Charlie"]
-
-
-# A function that could be used to generate a random number
-def random_number() -> int:
-    return random.randint(0, 100)
-
-
-#tower of Hanoi
-def tower_of_hanoi(n, source, destination, auxiliary):
-    if n == 1:
-        print("Move disk 1 from source", source, "to destination", destination)
-        return
-    tower_of_hanoi(n - 1, source, auxiliary, destination)
-    print("Move disk", n, "from source", source, "to destination", destination)
-    tower_of_hanoi(n - 1, auxiliary, destination, source)
+lis = soup.find(class_="product-grid")
+print(lis)
 
 

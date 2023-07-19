@@ -5784,7 +5784,7 @@
           Sub.options = mergeOptions(Super.options, extendOptions);
           Sub['super'] = Super;
           // For props and computed properties, we define the proxy getters on
-          // the Vue instances at extension time, on the extended prototype. This
+          // the Vue instances at extensions time, on the extended prototype. This
           // avoids Object.defineProperty calls for each instance created.
           if (Sub.options.props) {
               initProps(Sub);
@@ -5792,7 +5792,7 @@
           if (Sub.options.computed) {
               initComputed(Sub);
           }
-          // allow further extension/mixin/plugin usage
+          // allow further extensions/mixin/plugin usage
           Sub.extend = Super.extend;
           Sub.mixin = Super.mixin;
           Sub.use = Super.use;
@@ -5805,7 +5805,7 @@
           if (name) {
               Sub.options.components[name] = Sub;
           }
-          // keep a reference to the super options at extension time.
+          // keep a reference to the super options at extensions time.
           // later at instantiation we can check if Super's options have
           // been updated.
           Sub.superOptions = Super.options;
@@ -9252,7 +9252,7 @@
               }
               else {
                   // @ts-expect-error
-                  console[console.info ? 'info' : 'log']('Download the Vue Devtools extension for a better development experience:\n' +
+                  console[console.info ? 'info' : 'log']('Download the Vue Devtools extensions for a better development experience:\n' +
                       'https://github.com/vuejs/vue-devtools');
               }
           }

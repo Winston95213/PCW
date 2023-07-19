@@ -33,13 +33,14 @@ class Organizer(Step):
         p = zip_data["Price"]
         l = zip_data["Link"]
         i = zip_data["Image"]
-        zip_data = zip(pn, p, l, i)
+        o = zip_data["Online_Shop"]
+        zip_data = zip(pn, p, l, i, o)
         # zip_data = dict((pn, {p, l, i}) for pn, p, l, i in zip_data)
 
         return zip_data
 
     def process(self, data, inputs, utils):
-        columns = ["ProductName", "Price", "Link", "Image"]
+        columns = ["ProductName", "Price", "Link", "Image", "Online_Shop"]
         pchome_df = pd.DataFrame(data["pchome_data"], columns=columns)
         momo_df = pd.DataFrame(data["momo_data"], columns=columns)
         com_data = pd.concat([pchome_df, momo_df]).iloc[0:39]
