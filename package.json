@@ -2,11 +2,8 @@
   "dependencies": {
     "@vue/cli": "^5.0.8",
     "apexcharts": "^3.41.0",
-    "particles.js": "^2.0.0",
-    "particles.vue3": "^2.11.0",
     "vue-apexcharts": "^1.6.2",
     "vue3-apexcharts": "^1.4.4",
-    "vue3-particles": "^2.11.0"
   },
   "devDependencies": {
     "vue-particles": "^1.0.9"
